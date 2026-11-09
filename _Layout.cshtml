@@ -1,0 +1,56 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor SessionAccessor
+@{
+    var loggedRole = SessionAccessor.HttpContext?.Session.GetString("AssignedUserRole");
+    var loggedEmail = SessionAccessor.HttpContext?.Session.GetString("LoggedUserEmail");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RaceDay Framework Hub</title>
+    <link rel="stylesheet" href="https://jsdelivr.net" />
+    <style>
+        .navbar-brand { font-weight: 900; color: #f4511e !important; }
+        .bg-sports-theme { background-color: #0d1b2a !important; }
+    </style>
+</head>
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-sports-theme shadow mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">🏁 RACEDAY</a>
+                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Index">Browse Catalog</a></li>
+                        @if (loggedRole == "Organiser")
+                        {
+                            <li class="nav-item"><a class="nav-link text-warning" asp-controller="Organiser" asp-action="Dashboard">Management</a></li>
+                            <li class="nav-item"><a class="nav-link text-warning" asp-controller="Organiser" asp-action="CreateEvent">Host Event</a></li>
+                        }
+                        @if (loggedRole == "Participant")
+                        {
+                            <li class="nav-item"><a class="nav-link text-info" asp-controller="Participant" asp-action="MyRaces">My Schedule</a></li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (!string.IsNullOrEmpty(loggedRole))
+                        {
+                            <li class="nav-item"><span class="nav-link text-light">👤 @loggedEmail</span></li>
+                            <li class="nav-item"><a class="btn btn-sm btn-outline-danger m-1" asp-controller="Home" asp-action="Logout">Sign Out</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="btn btn-sm btn-outline-light m-1" asp-controller="Home" asp-action="Login">Sign In</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main">@RenderBody()</main>
+    </div>
+    <script src="https://jsdelivr.net"></script>
+</body>
+</html>
