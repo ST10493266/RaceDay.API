@@ -1,6 +1,9 @@
 # RaceDay.API
 # RaceDay Cloud-Native Event Management Platform
 
+YouTube link:
+https://youtu.be/tYnAPrphtP0 
+
 An integrated, role-aware, multi-tiered tournament orchestration management system built explicitly using **ASP.NET Core 8.0**. 
 
 The repository is structured into a clean architectural pattern: a backend core engine exposing decoupled RESTful endpoints (`RaceDay.Api`) and a secure, non-database-coupled web frontend client (`RaceDay.Web`).
